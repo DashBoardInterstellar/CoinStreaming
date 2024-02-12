@@ -1,33 +1,11 @@
 """
 Coin present data format architecture
 """
+
 from __future__ import annotations
 from typing import Mapping, Any
 from decimal import Decimal, ROUND_HALF_UP
 from pydantic import BaseModel, validator
-
-
-class CoinSymbol(BaseModel):
-    """
-    Subject:
-        - simpleist coin symbol\n
-    Returns:
-        - "BTC"
-    """
-
-    coin_symbol: str
-
-
-class CoinNameAndSymbol(CoinSymbol):
-    """
-    Subject:
-        - coin_symbol and Name
-    Returns:
-        - {"BTC": "비트코인"}
-
-    """
-
-    korean_name: str
 
 
 class CoinMarket(BaseModel):
@@ -35,7 +13,7 @@ class CoinMarket(BaseModel):
     Subject:
         - coin_preset_price_total_schema \n
     Returns:
-        - pydantic in JSON transformation\n
+        - pydantic in JSON transformation \n
         >>> {
                 "upbit": {
                     "name": "upbit-ETH",

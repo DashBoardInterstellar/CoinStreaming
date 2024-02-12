@@ -328,7 +328,7 @@ class MessageDataPreprocessing(MessageDataPreprocessingAbstract):
                     symbol=symbol,
                     type_="SocketDataIn",
                 )
-                self.message_by_data[market]: list[market] = []
+                self.message_by_data[market] = []
 
             await self.p.data_log(
                 exchange_name=parse_uri(uri=uri), message=market_schema

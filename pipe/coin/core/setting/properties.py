@@ -20,6 +20,12 @@ UPBIT_URL: str = parser.get("APIURL", "UPBIT")
 BITHUMB_URL: str = parser.get("APIURL", "BITHUMB")
 KORBIT_URL: str = parser.get("APIURL", "KORBIT")
 COINONE_URL: str = parser.get("APIURL", "COINONE")
+
+SOCKET_UPBIT_URL: str = parser.get("SOCKETURL", "UPBIT")
+SOCKET_BITHUMB_URL: str = parser.get("SOCKETURL", "BITHUMB")
+SOCKET_KORBIT_URL: str = parser.get("SOCKETURL", "KORBIT")
+SOCKET_COINONE_URL: str = parser.get("SOCKETURL", "COINONE")
+
 MAXLISTSIZE: int = 10
 
 UPBIT_BTC_REAL_TOPIC_NAME: str = parser.get(
