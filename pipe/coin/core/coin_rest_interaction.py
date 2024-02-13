@@ -64,7 +64,7 @@ class CoinPresentPriceReponseAPI:
                 data=data,
             ).model_dump()
         except (PydanticUserError, ValidationError) as error:
-            self.logging.error_log("Exception occurred: %s", error)
+            self.logging.error_log("error", "Exception occurred: %s", error)
 
     async def __get_market_present_price(
         self, market: str, coin_symbol: str
@@ -120,4 +120,6 @@ class CoinPresentPriceReponseAPI:
 
                 await self.logging.data_log(exchange_name="Total", message=schema)
             except (TimeoutError, CancelledError, ValidationError) as error:
-                await self.logging.error_log("Data transmission failed: %s", error)
+                await self.logging.error_log(
+                    "error", "Data transmission failed: %s", error
+                )

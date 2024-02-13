@@ -52,6 +52,19 @@ snappy = ["cramjam"]
 zstd = ["cramjam"]
 
 [[package]]
+name = "aiologger"
+version = "0.7.0"
+description = "Asynchronous logging for python and asyncio"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "aiologger-0.7.0.tar.gz", hash = "sha256:7a4d5c91b836b61e842a791071786a3d80d6b6fa46fb8fd8e73391253ecb72ac"},
+]
+
+[package.extras]
+aiofiles = ["aiofiles (==0.4.0)"]
+
+[[package]]
 name = "annotated-types"
 version = "0.6.0"
 description = "Reusable constraint types to use with typing.Annotated"
@@ -1635,4 +1648,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.3"
-content-hash = "322447ab37e9bff2189c0bdeb63c255352d14cbf1dc7990e57ff3e345f3b79fc"
+content-hash = "a86e7883ee3ad689c4b9db0f9ddb47b260a665ad7693cc52ea9cb2e4d673b978"

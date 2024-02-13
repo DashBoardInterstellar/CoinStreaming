@@ -40,3 +40,11 @@ KORBIT_BTC_REAL_TOPIC_NAME: str = parser.get(
 COINONE_BTC_REAL_TOPIC_NAME: str = parser.get(
     "REALTIMETOPICNAME", "COINONE_BTC_REAL_TOPIC_NAME"
 )
+
+
+# KAFKA
+BOOTSTRAP_SERVER = parser.get("KAFKA", "bootstrap_servers")
+SECURITY_PROTOCOL = parser.get("KAFKA", "security_protocol")
+MAX_BATCH_SIZE: int = parser.get("KAFKA", "max_batch_size")
+MAX_REQUEST_SIZE: int = parser.get("KAFKA", "max_request_size")
+ARCKS = parser.get("KAFKA", "acks")
