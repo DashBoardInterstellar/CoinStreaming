@@ -164,3 +164,7 @@ services:
 networks:
   kafka-network:
     driver: bridge
+
+
+volumes:
+  mysql_data_stock: {}
