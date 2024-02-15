@@ -163,3 +163,4 @@ kafka-docker/.kafkalogging/zookeeper
 pipe/core/coin/data
 pipe/coin/core/data_mq/mq_logging
 .vscode
+kafka-docker/init.sql

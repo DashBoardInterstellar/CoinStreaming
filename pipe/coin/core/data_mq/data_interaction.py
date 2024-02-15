@@ -69,8 +69,8 @@ class KafkaMessageSender:
             "max_batch_size": int(f"{MAX_BATCH_SIZE}"),
             "max_request_size": int(f"{MAX_REQUEST_SIZE}"),
             "acks": f"{ARCKS}",
-            "key_serializer": lambda key: json.dumps(key).encode("utf-8"),
-            "value_serializer": lambda value: json.dumps(str(value)).encode("utf-8"),
+            # "key_serializer": lambda key: json.dumps(key).encode("utf-8"),
+            # "value_serializer": lambda value: json.dumps(str(value)).encode("utf-8"),
             "retry_backoff_ms": 100,
         }
         producer = AIOKafkaProducer(**config)

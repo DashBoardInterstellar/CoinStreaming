@@ -127,56 +127,40 @@ services:
       - 8080:8080
     networks:
       - kafka-network
-  
-  # fluentd1:
-  #   extends:
-  #     service: fluentd1
-  #     file: fluentd-cluster.yml 
-  #   depends_on:
-  #     - kafka-1
-  #     - kafka-2
-  #     - kafka-3
-  #     - zookeeper-1
-  #     - zookeeper-2
-  #     - zookeeper-3
 
-  # fluentd2:
-  #   extends:
-  #     service: fluentd2
-  #     file: fluentd-cluster.yml 
-  #   depends_on:
-  #     - kafka-1
-  #     - kafka-2
-  #     - kafka-3
-  #     - zookeeper-1
-  #     - zookeeper-2
-  #     - zookeeper-3
-
-  # fluentd3:
-  #   extends:
-  #     service: fluentd3
-  #     file: fluentd-cluster.yml 
-  #   depends_on:
-  #     - kafka-1
-  #     - kafka-2
-  #     - kafka-3
-  #     - zookeeper-1
-  #     - zookeeper-2
-  #     - zookeeper-3
-  
-  # nginx:
-  #   extends:
-  #     service: nginx
-  #     file: fluentd-cluster.yml 
-  #   depends_on:
-  #     - kafka-1
-  #     - kafka-2
-  #     - kafka-3
-  #     - zookeeper-1
-  #     - zookeeper-2
-  #     - zookeeper-3
+  stock_sql:
+    container_name: stock-sql
+    image: mysql:8
+    ports:
+      - "3307:3306"
+    env_file:
+      - ./.env
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_AUTH_PLUGIN=caching_sha2_password
+      - TZ=Asia/Seoul
+    command:
+      - --default-authentication-plugin=caching_sha2_password
+      - --collation-server=utf8mb4_unicode_ci
+      - --character-set-server=utf8mb4
+      - --lower_case_table_names=1
+    volumes:
+      - mysql_data_stock:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+        test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD']
+        interval: 10s
+        timeout: 2s
+        retries: 100
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+    networks:
+      - kafka-network
 
 
 networks:
   kafka-network:
-    external: true
+    driver: bridge
