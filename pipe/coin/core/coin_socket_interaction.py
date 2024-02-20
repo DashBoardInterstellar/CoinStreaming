@@ -5,6 +5,7 @@
 2. MessageDataPreprocessing
     - 메시지 스키마 통일화 전처리 로직 
 """
+
 from __future__ import annotations
 import json
 from pathlib import Path

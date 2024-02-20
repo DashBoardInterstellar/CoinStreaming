@@ -6,6 +6,7 @@ import sys
 import json
 from typing import Any
 from pathlib import Path
+from decimal import Decimal
 from collections import defaultdict
 
 from aiokafka import AIOKafkaProducer
@@ -49,6 +50,11 @@ def deep_getsizeof(obj, seen=None) -> int:
     return size
 
 
+def default(obj: Any):
+    if isinstance(obj, Decimal):
+        return str(obj)
+
+
 class KafkaMessageSender:
     """
     3. KafkaMessageSender
@@ -70,7 +76,7 @@ class KafkaMessageSender:
             "max_request_size": int(f"{MAX_REQUEST_SIZE}"),
             "acks": f"{ARCKS}",
             # "key_serializer": lambda key: json.dumps(key).encode("utf-8"),
-            # "value_serializer": lambda value: json.dumps(str(value)).encode("utf-8"),
+            # "value_serializer": lambda value: json.dumps(value, default=default).encode("utf-8"),
             "retry_backoff_ms": 100,
         }
         producer = AIOKafkaProducer(**config)
@@ -78,7 +84,7 @@ class KafkaMessageSender:
         await producer.start()
 
         try:
-            encoded_message = json.dumps(message).encode("utf-8")
+            encoded_message = json.dumps(message, default=default).encode("utf-8")
             await producer.send_and_wait(topic, encoded_message)
             size: int = deep_getsizeof(encoded_message)
             message = f"Message delivered to: {topic} --> counting --> {len(encoded_message)} size --> {size}"

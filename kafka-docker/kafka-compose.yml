@@ -160,6 +160,37 @@ services:
     networks:
       - kafka-network
 
+  congestion_sql:
+    container_name: congestion-sql
+    image: mysql:8
+    ports:
+      - "3308:3306"
+    env_file:
+      - ./.env
+    environment:
+      - MYSQL_DATABASE=${CON_DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${CON_DB_PASSWORD}
+      - MYSQL_AUTH_PLUGIN=caching_sha2_password
+      - TZ=Asia/Seoul
+    command:
+      - --default-authentication-plugin=caching_sha2_password
+      - --collation-server=utf8mb4_unicode_ci
+      - --character-set-server=utf8mb4
+      - --lower_case_table_names=1
+    volumes:
+      - congestion_data_stock:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+        test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD']
+        interval: 10s
+        timeout: 2s
+        retries: 100
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+    networks:
+      - kafka-network
 
 networks:
   kafka-network:
@@ -168,3 +199,4 @@ networks:
 
 volumes:
   mysql_data_stock: {}
+  congestion_data_stock: {}
