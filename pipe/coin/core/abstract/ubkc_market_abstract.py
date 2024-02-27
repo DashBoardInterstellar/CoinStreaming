@@ -4,7 +4,7 @@ from abc import abstractmethod, ABC
 
 class CoinSocketAndRestAbstract(ABC):
     @abstractmethod
-    def get_socket_parameter() -> list[dict[str, Any]]:
+    async def get_socket_parameter() -> list[dict[str, Any]]:
         """
         Returns:
             list[dict[str, Any]]: 각 거래소 socket parameter
@@ -26,7 +26,7 @@ class CoinSocketAndRestAbstract(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_coin_all_info_price(self, coin_name: str) -> dict[str, Any]:
+    async def get_coin_all_info_price(self, coin_name: str) -> dict[str, Any]:
         """
         Subject:
             - 코인 인덱스 가격 정보 \n

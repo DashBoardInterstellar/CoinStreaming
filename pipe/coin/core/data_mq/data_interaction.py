@@ -117,14 +117,6 @@ class KafkaMessageSender:
                 topic=f"{symbol.lower()}{type_}{market_name}",
                 message=data,
             )
-            # 불능 상태에서 저장된 메시지가 있는 경우 함께 전송
-            while self.except_list[market_name]:
-                stored_message = self.except_list[market_name].pop(0)
-                await self.produce_sending(
-                    topic=f"{type_}{market_name}",
-                    message=stored_message,
-                )
-
         except KafkaConnectionError as error:
             await self.logger.error_log(
                 error_type="etc_error",

@@ -21,7 +21,7 @@ class UpbitRestAndSocket(CoinSocketAndRestAbstract):
         self.__websocket = get_symbol_collect_url("upbit", "socket")
         self.__rest = get_symbol_collect_url("upbit", "rest")
 
-    def get_socket_parameter(self, symbol: str) -> list[dict[str, Any]]:
+    async def get_socket_parameter(self, symbol: str) -> list[dict[str, Any]]:
         return [
             {"ticket": str(uuid.uuid4())},
             {
@@ -36,7 +36,7 @@ class UpbitRestAndSocket(CoinSocketAndRestAbstract):
 
         return await WCM().websocket_to_json(
             uri=self.__websocket,
-            subscribe_fmt=self.get_socket_parameter(symbol=symbol),
+            subscribe_fmt=await self.get_socket_parameter(symbol=symbol),
             symbol=symbol,
         )
 
@@ -70,7 +70,7 @@ class BithumbRestAndSocket(CoinSocketAndRestAbstract):
         self.__websocket = get_symbol_collect_url("bithumb", "socket")
         self.__rest = get_symbol_collect_url("bithumb", "rest")
 
-    def get_socket_parameter(self, symbol: str) -> list[dict[str, Any]]:
+    async def get_socket_parameter(self, symbol: str) -> list[dict[str, Any]]:
         return {
             "type": "ticker",
             "symbols": [f"{symbol.upper()}_KRW"],
@@ -82,7 +82,7 @@ class BithumbRestAndSocket(CoinSocketAndRestAbstract):
 
         return await WCM().websocket_to_json(
             uri=self.__websocket,
-            subscribe_fmt=self.get_socket_parameter(symbol=symbol),
+            subscribe_fmt=await self.get_socket_parameter(symbol=symbol),
             symbol=symbol,
         )
 
@@ -115,7 +115,7 @@ class CoinoneRestAndSocket(CoinSocketAndRestAbstract):
         self.__websocket = get_symbol_collect_url("coinone", "socket")
         self.__rest = get_symbol_collect_url("coinone", "rest")
 
-    def get_socket_parameter(self, symbol: str) -> dict[str, str, dict[str, str]]:
+    async def get_socket_parameter(self, symbol: str) -> dict[str, str, dict[str, str]]:
         return {
             "request_type": "SUBSCRIBE",
             "channel": "TICKER",
@@ -127,7 +127,7 @@ class CoinoneRestAndSocket(CoinSocketAndRestAbstract):
 
         return await WCM().websocket_to_json(
             uri=self.__websocket,
-            subscribe_fmt=self.get_socket_parameter(symbol=symbol),
+            subscribe_fmt=await self.get_socket_parameter(symbol=symbol),
             symbol=symbol,
         )
 
@@ -163,7 +163,7 @@ class KorbitRestAndSocket(CoinSocketAndRestAbstract):
         self.__websocket = get_symbol_collect_url("korbit", "socket")
         self.__rest = get_symbol_collect_url("korbit", "rest")
 
-    def get_socket_parameter(self, symbol: str) -> list[dict[str, Any]]:
+    async def get_socket_parameter(self, symbol: str) -> list[dict[str, Any]]:
         return {
             "accessToken": None,
             "timestamp": int(datetime.now(timezone.utc).timestamp()),
@@ -176,7 +176,7 @@ class KorbitRestAndSocket(CoinSocketAndRestAbstract):
 
         return await WCM().websocket_to_json(
             uri=self.__websocket,
-            subscribe_fmt=self.get_socket_parameter(symbol=symbol),
+            subscribe_fmt=await self.get_socket_parameter(symbol=symbol),
             symbol=symbol,
         )
 
